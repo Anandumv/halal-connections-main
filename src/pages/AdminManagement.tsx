@@ -431,7 +431,7 @@ export default function AdminManagement() {
               </Button>
               <div className="flex items-center space-x-2">
                 <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center">
-                  <Shield className="h-6 w-6 text-black" />
+                  <Shield className="h-6 w-6 text-foreground" />
                 </div>
                 <div>
                   <h1 className="gradient-text text-2xl font-bold">Admin Management</h1>
@@ -458,16 +458,16 @@ export default function AdminManagement() {
       <main className="container mx-auto px-4 py-8">
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 bg-background/50 border border-amber-400/20">
-            <TabsTrigger value="overview" className="text-muted-foreground data-[state=active]:bg-amber-400 data-[state=active]:text-black">
+            <TabsTrigger value="overview" className="text-muted-foreground data-[state=active]:bg-amber-400 data-[state=active]:text-foreground">
               Overview
             </TabsTrigger>
-            <TabsTrigger value="users" className="text-muted-foreground data-[state=active]:bg-amber-400 data-[state=active]:text-black">
+            <TabsTrigger value="users" className="text-muted-foreground data-[state=active]:bg-amber-400 data-[state=active]:text-foreground">
               Users
             </TabsTrigger>
-            <TabsTrigger value="matches" className="text-muted-foreground data-[state=active]:bg-amber-400 data-[state=active]:text-black">
+            <TabsTrigger value="matches" className="text-muted-foreground data-[state=active]:bg-amber-400 data-[state=active]:text-foreground">
               Matches
             </TabsTrigger>
-            <TabsTrigger value="admins" className="text-muted-foreground data-[state=active]:bg-amber-400 data-[state=active]:text-black">
+            <TabsTrigger value="admins" className="text-muted-foreground data-[state=active]:bg-amber-400 data-[state=active]:text-foreground">
               Admins
             </TabsTrigger>
           </TabsList>
@@ -557,7 +557,7 @@ export default function AdminManagement() {
                     <div key={profile.id} className="flex items-center space-x-4 p-3 border border-amber-400/20 rounded-lg">
                       <Avatar className="h-10 w-10">
                         <AvatarImage src={profile.photo_url || undefined} />
-                        <AvatarFallback className="bg-gradient-to-br from-amber-400 to-amber-600 text-black font-semibold">
+                        <AvatarFallback className="bg-gradient-to-br from-amber-400 to-amber-600 text-foreground font-semibold">
                           {profile.full_name?.charAt(0).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
@@ -660,7 +660,7 @@ export default function AdminManagement() {
                           <div className="flex items-center space-x-3">
                             <Avatar className="h-8 w-8">
                               <AvatarImage src={profile.photo_url || undefined} />
-                              <AvatarFallback className="bg-gradient-to-br from-amber-400 to-amber-600 text-black text-xs font-semibold">
+                              <AvatarFallback className="bg-gradient-to-br from-amber-400 to-amber-600 text-foreground text-xs font-semibold">
                                 {profile.full_name?.charAt(0).toUpperCase()}
                               </AvatarFallback>
                             </Avatar>
@@ -708,7 +708,7 @@ export default function AdminManagement() {
                               <div>Location: {profile.preferences.looking_for_location}</div>
                             )}
                             {!profile.preferences?.looking_for_age_min && !profile.preferences?.looking_for_gender && !profile.preferences?.looking_for_location && (
-                              <div className="text-gray-500">No preferences set</div>
+                              <div className="text-muted-foreground">No preferences set</div>
                             )}
                           </div>
                         </TableCell>
@@ -1109,7 +1109,7 @@ export default function AdminManagement() {
                           <X className="h-4 w-4" />
                         </button>
                         {index === 0 && (
-                          <div className="absolute bottom-2 left-2 bg-amber-400 text-black px-2 py-1 rounded text-xs font-medium">
+                          <div className="absolute bottom-2 left-2 bg-amber-400 text-foreground px-2 py-1 rounded text-xs font-medium">
                             Main
                           </div>
                         )}
@@ -1140,7 +1140,7 @@ export default function AdminManagement() {
 
                   {editPhotoPreviews.length === 0 && (
                     <div className="text-center py-4 border border-dashed border-gray-600 rounded-lg">
-                      <Camera className="h-8 w-8 text-gray-600 mx-auto mb-2" />
+                      <Camera className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                       <p className="text-muted-foreground text-sm">No photos uploaded yet</p>
                     </div>
                   )}

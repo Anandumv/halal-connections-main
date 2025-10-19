@@ -988,10 +988,10 @@ export default function AdminDashboard() {
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <div className="w-16 h-16 bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-2xl">
-                  <Shield className="h-8 w-8 text-black" />
+                  <Shield className="h-8 w-8 text-foreground" />
                 </div>
-                <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-black flex items-center justify-center">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-foreground flex items-center justify-center">
+                  <div className="w-2 h-2 bg-foreground rounded-full"></div>
                 </div>
               </div>
               <div>
@@ -1017,7 +1017,7 @@ export default function AdminDashboard() {
               </Button>
               <Button
                 onClick={() => setShowMatchModal(true)}
-                className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold px-6 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-foreground font-semibold px-6 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <Heart className="h-4 w-4 mr-2" />
                 Create Match
@@ -1191,7 +1191,7 @@ export default function AdminDashboard() {
                           <div className="flex items-center gap-4">
                             <Avatar className="h-16 w-16 ring-2 ring-amber-400/50 shadow-lg">
                               <AvatarImage src={profile.photo_url} />
-                              <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-black font-bold text-lg">
+                              <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground font-bold text-lg">
                                 {profile.full_name?.[0]}
                               </AvatarFallback>
                             </Avatar>
@@ -1302,7 +1302,7 @@ export default function AdminDashboard() {
                               </select>
                               <Button
                                 size="sm"
-                                className="w-full bg-gradient-to-r from-amber-400 to-yellow-400 text-black font-semibold hover:from-amber-500 hover:to-yellow-500 transition-all duration-200 rounded-lg shadow-lg"
+                                className="w-full bg-gradient-to-r from-amber-400 to-yellow-400 text-foreground font-semibold hover:from-amber-500 hover:to-yellow-500 transition-all duration-200 rounded-lg shadow-lg"
                                 disabled={!matchWith[profile.id]}
                                 onClick={async () => {
                                   const otherId = matchWith[profile.id];
@@ -1373,21 +1373,21 @@ export default function AdminDashboard() {
           <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 bg-background/50 border border-amber-400/20 rounded-2xl p-2 text-sm font-medium">
             <TabsTrigger 
               value="profiles" 
-              className="text-muted-foreground data-[state=active]:text-black data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
+              className="text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
             >
               <UserCheck className="h-4 w-4 mr-2" />
               Profile Verification
             </TabsTrigger>
             <TabsTrigger 
               value="matches" 
-              className="text-muted-foreground data-[state=active]:text-black data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
+              className="text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
             >
               <Heart className="h-4 w-4 mr-2" />
               Match Management
             </TabsTrigger>
             <TabsTrigger 
               value="analytics" 
-              className="text-muted-foreground data-[state=active]:text-black data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
+              className="text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
             >
               <BarChart3 className="h-4 w-4 mr-2" />
               Analytics
@@ -1456,7 +1456,7 @@ export default function AdminDashboard() {
                               <div className="flex items-center gap-3">
                                 <Avatar className="h-12 w-12 ring-2 ring-amber-400/30">
                                   <AvatarImage src={profile.photo_url} />
-                                  <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-black font-bold">
+                                  <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground font-bold">
                                     {profile.full_name?.[0]}
                                   </AvatarFallback>
                                 </Avatar>
@@ -1576,7 +1576,7 @@ export default function AdminDashboard() {
                               <div className="flex items-center space-x-2">
                                 <Avatar className="h-8 w-8 ring-2 ring-amber-400/30">
                                   <AvatarImage src={match.user1?.photo_url} />
-                                  <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-black text-xs font-bold">
+                                  <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground text-xs font-bold">
                                     {match.user1?.full_name?.[0]}
                                   </AvatarFallback>
                                 </Avatar>
@@ -1588,7 +1588,7 @@ export default function AdminDashboard() {
                               <div className="flex items-center space-x-2">
                                 <Avatar className="h-8 w-8 ring-2 ring-amber-400/30">
                                   <AvatarImage src={match.user2?.photo_url} />
-                                  <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-black text-xs font-bold">
+                                  <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground text-xs font-bold">
                                     {match.user2?.full_name?.[0]}
                                   </AvatarFallback>
                                 </Avatar>
@@ -1810,7 +1810,7 @@ export default function AdminDashboard() {
               </select>
             </div>
             <DialogFooter>
-              <Button type="submit" className="bg-gradient-to-r from-amber-400 to-yellow-400 text-black font-bold hover:from-amber-500 hover:to-yellow-500 transition-all duration-200 rounded-lg shadow-lg">Create Match</Button>
+              <Button type="submit" className="bg-gradient-to-r from-amber-400 to-yellow-400 text-foreground font-bold hover:from-amber-500 hover:to-yellow-500 transition-all duration-200 rounded-lg shadow-lg">Create Match</Button>
             </DialogFooter>
           </form>
         </DialogContent>
@@ -1826,13 +1826,13 @@ export default function AdminDashboard() {
             {chatLoading ? <div className="text-center text-muted-foreground">Loading...</div> :
               chatMessages.map((msg, idx) => (
                 <div key={msg.id || idx} className={`flex ${msg.sender_id === user.id ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`rounded-lg px-4 py-2 ${msg.sender_id === user.id ? 'bg-amber-400 text-black' : 'bg-background/70 text-foreground border border-amber-400/20'}`}>{msg.content}</div>
+                  <div className={`rounded-lg px-4 py-2 ${msg.sender_id === user.id ? 'bg-amber-400 text-foreground' : 'bg-background/70 text-foreground border border-amber-400/20'}`}>{msg.content}</div>
                 </div>
               ))}
           </div>
           <div className="flex gap-2 mt-2">
             <Input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendChatMessage()} placeholder="Type a message..." className="flex-1 bg-background/50 border-amber-400/20 text-foreground" />
-            <Button onClick={sendChatMessage} disabled={chatLoading || !chatInput.trim()} className="bg-amber-400 text-black font-bold">Send</Button>
+            <Button onClick={sendChatMessage} disabled={chatLoading || !chatInput.trim()} className="bg-amber-400 text-foreground font-bold">Send</Button>
           </div>
         </DialogContent>
       </Dialog>

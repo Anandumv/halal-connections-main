@@ -431,7 +431,7 @@ export default function Dashboard() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <Heart className="h-8 w-8 text-black" />
+            <Heart className="h-8 w-8 text-foreground" />
           </div>
           <p className="text-foreground text-lg">Loading your dashboard...</p>
         </div>
@@ -445,7 +445,7 @@ export default function Dashboard() {
         <Card className="bg-card/90 border border-amber-400/30 shadow-2xl rounded-3xl max-w-lg w-full backdrop-blur-sm">
           <CardHeader className="text-center pb-6">
             <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
-              <UserPlus className="h-10 w-10 text-black" />
+              <UserPlus className="h-10 w-10 text-foreground" />
             </div>
                             <CardTitle className="text-foreground text-2xl font-bold mb-2">Welcome to Bee Hive Match</CardTitle>
             <CardDescription className="text-muted-foreground text-lg">
@@ -489,7 +489,7 @@ export default function Dashboard() {
                   });
                 }
               }}
-              className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold h-14 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+              className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-foreground font-semibold h-14 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
             >
               <Plus className="h-6 w-6 mr-3" />
               Create Your Profile
@@ -589,7 +589,7 @@ export default function Dashboard() {
                             }}
                           />
                         ) : null}
-                        <div className={`w-full h-full flex items-center justify-center text-black font-bold text-lg ${(profile.photos && profile.photos.length > 0) || profile.photo_url ? 'hidden' : ''}`}>
+                        <div className={`w-full h-full flex items-center justify-center text-foreground font-bold text-lg ${(profile.photos && profile.photos.length > 0) || profile.photo_url ? 'hidden' : ''}`}>
                   {profile.full_name?.[0] || 'U'}
                 </div>
               </button>
@@ -660,7 +660,7 @@ export default function Dashboard() {
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <User className="h-5 w-5 text-black" />
+                    <User className="h-5 w-5 text-foreground" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-foreground font-semibold text-sm">My Profile</h3>
@@ -676,7 +676,7 @@ export default function Dashboard() {
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <MessageCircle className="h-5 w-5 text-black" />
+                    <MessageCircle className="h-5 w-5 text-foreground" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-foreground font-semibold text-sm">Messages</h3>
@@ -692,7 +692,7 @@ export default function Dashboard() {
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Heart className="h-5 w-5 text-black" />
+                    <Heart className="h-5 w-5 text-foreground" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-foreground font-semibold text-sm">My Matches</h3>
@@ -708,7 +708,7 @@ export default function Dashboard() {
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Settings className="h-5 w-5 text-black" />
+                    <Settings className="h-5 w-5 text-foreground" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-foreground font-semibold text-sm">Settings</h3>
@@ -733,7 +733,7 @@ export default function Dashboard() {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <User className="h-10 w-10 text-black" />
+                    <User className="h-10 w-10 text-foreground" />
                   )}
                 </div>
                 
@@ -769,7 +769,7 @@ export default function Dashboard() {
                 <CardHeader className="pb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-                      <Clock className="h-4 w-4 text-black" />
+                      <Clock className="h-4 w-4 text-foreground" />
                     </div>
                     <div>
                       <CardTitle className="text-foreground text-lg font-semibold">Pending Matches</CardTitle>
@@ -790,7 +790,7 @@ export default function Dashboard() {
                         <div key={match.id} className="flex items-center gap-4 p-4 bg-card/50 rounded-lg border border-amber-400/20">
                           <Avatar className="h-12 w-12 ring-2 ring-amber-400/30">
                             <AvatarImage src={(matchedProfile?.photos && matchedProfile.photos.length > 0) ? matchedProfile.photos[0] : matchedProfile?.photo_url} />
-                            <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-500 text-black font-bold">
+                            <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-500 text-foreground font-bold">
                               {matchedProfile?.full_name?.[0] || 'U'}
                             </AvatarFallback>
                           </Avatar>
@@ -798,7 +798,7 @@ export default function Dashboard() {
                             <h4 className="font-semibold text-foreground text-base">{matchedProfile?.full_name}</h4>
                             <p className="text-muted-foreground text-sm">{matchedProfile?.age} years • {matchedProfile?.gender}</p>
                             {matchedProfile?.bio && (
-                              <p className="text-gray-500 text-xs mt-1 line-clamp-2">{matchedProfile.bio}</p>
+                              <p className="text-muted-foreground text-xs mt-1 line-clamp-2">{matchedProfile.bio}</p>
                             )}
                             <div className="flex items-center gap-2 mt-2">
                               <p className="text-amber-400 text-xs">Match created {getTimeAgo(match.created_at)}</p>
@@ -856,7 +856,7 @@ export default function Dashboard() {
                 <CardHeader className="pb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-lg flex items-center justify-center">
-                      <Heart className="h-4 w-4 text-black" />
+                      <Heart className="h-4 w-4 text-foreground" />
                     </div>
                     <div>
                       <CardTitle className="text-foreground text-lg font-semibold">Your Matches</CardTitle>
@@ -876,7 +876,7 @@ export default function Dashboard() {
                              onClick={() => navigate(`/messages?match=${match.id}`)}>
                           <Avatar className="h-10 w-10 ring-2 ring-amber-400/30 group-hover:ring-amber-400/60 transition-all duration-300">
                             <AvatarImage src={(matchedProfile?.photos && matchedProfile.photos.length > 0) ? matchedProfile.photos[0] : matchedProfile?.photo_url} />
-                            <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-500 text-black font-bold">
+                            <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-500 text-foreground font-bold">
                               {matchedProfile?.full_name?.[0] || 'U'}
                             </AvatarFallback>
                           </Avatar>
@@ -946,7 +946,7 @@ export default function Dashboard() {
                     }}
                   />
                 ) : (
-                  <div className="w-full h-64 flex items-center justify-center text-black font-bold text-4xl bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl">
+                  <div className="w-full h-64 flex items-center justify-center text-foreground font-bold text-4xl bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl">
                     {profile.full_name?.[0] || 'U'}
                   </div>
                 )}
@@ -996,7 +996,7 @@ export default function Dashboard() {
                 <label className="cursor-pointer">
                   <Button
                     variant="outline"
-                    className="border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black transition-all duration-300"
+                    className="border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-foreground transition-all duration-300"
                     disabled={uploadingPhoto}
                   >
                     <Upload className="h-4 w-4 mr-2" />
@@ -1012,7 +1012,7 @@ export default function Dashboard() {
                 </label>
                 <Button
                   variant="outline"
-                  className="border-gray-400 text-muted-foreground hover:bg-gray-400 hover:text-black transition-all duration-300"
+                  className="border-gray-400 text-muted-foreground hover:bg-gray-400 hover:text-foreground transition-all duration-300"
                   onClick={() => setShowPhotoModal(false)}
                 >
                   Close
@@ -1055,10 +1055,10 @@ export default function Dashboard() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-foreground text-sm">{notification.title}</span>
-                      {!notification.read && <span className="ml-2 px-2 py-0.5 bg-amber-400 text-black text-xs rounded-full">New</span>}
+                      {!notification.read && <span className="ml-2 px-2 py-0.5 bg-amber-400 text-foreground text-xs rounded-full">New</span>}
                     </div>
                     <div className="text-muted-foreground text-xs mb-1">{notification.message}</div>
-                    <div className="text-gray-500 text-xs">{new Date(notification.created_at).toLocaleString()}</div>
+                    <div className="text-muted-foreground text-xs">{new Date(notification.created_at).toLocaleString()}</div>
                   </div>
                   {!notification.read && (
                     <Button
