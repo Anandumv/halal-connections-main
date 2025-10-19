@@ -257,18 +257,20 @@ function AdminEditProfileForm({ editProfile, saveProfile, handleAdminPhotoUpload
                 modal.onclick = () => modal.remove();
                 
                 const content = document.createElement('div');
-                content.className = 'relative max-w-2xl w-full mx-2 sm:mx-4 rounded-3xl bg-gradient-to-br from-background/95 to-card/95 border-4 border-amber-400/60 shadow-2xl p-6 sm:p-8';
+                content.className = 'relative max-w-4xl w-full mx-2 sm:mx-4 rounded-3xl bg-gradient-to-br from-background/95 to-card/95 border-4 border-amber-400/60 shadow-2xl p-4 sm:p-6';
                 content.onclick = e => e.stopPropagation();
                 
                 const closeBtn = document.createElement('button');
-                closeBtn.className = 'absolute top-4 right-4 text-amber-400 hover:text-foreground bg-background/30 rounded-full p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-all duration-300';
+                closeBtn.className = 'absolute top-4 right-4 text-amber-400 hover:text-foreground bg-background/30 rounded-full p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-all duration-300 z-10';
                 closeBtn.innerHTML = '<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
                 closeBtn.onclick = () => modal.remove();
                 
                 const img = document.createElement('img');
                 img.src = form.watch('photo_url');
                 img.alt = 'Profile Photo';
-                img.className = 'w-full h-auto max-h-96 object-cover rounded-xl';
+                img.className = 'w-full h-auto max-h-[80vh] object-contain rounded-xl';
+                img.style.maxWidth = '100%';
+                img.style.height = 'auto';
                 
                 const title = document.createElement('h3');
                 title.className = 'text-2xl font-bold text-foreground mb-2 mt-4 text-center';
@@ -1316,7 +1318,42 @@ export default function AdminDashboard() {
                         {/* User Profile */}
                         <TableCell className="py-6 px-4">
                           <div className="flex items-center gap-4">
-                            <Avatar className="h-16 w-16 ring-2 ring-amber-400/50 shadow-lg">
+                            <Avatar 
+                              className="h-16 w-16 ring-2 ring-amber-400/50 shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
+                              onClick={() => {
+                                if (!profile.photo_url) return;
+                                // Create a modal to show the image in full size
+                                const modal = document.createElement('div');
+                                modal.className = 'fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4';
+                                modal.onclick = () => modal.remove();
+                                
+                                const content = document.createElement('div');
+                                content.className = 'relative max-w-4xl w-full mx-2 sm:mx-4 rounded-3xl bg-gradient-to-br from-background/95 to-card/95 border-4 border-amber-400/60 shadow-2xl p-4 sm:p-6';
+                                content.onclick = e => e.stopPropagation();
+                                
+                                const closeBtn = document.createElement('button');
+                                closeBtn.className = 'absolute top-4 right-4 text-amber-400 hover:text-foreground bg-background/30 rounded-full p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-all duration-300 z-10';
+                                closeBtn.innerHTML = '<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+                                closeBtn.onclick = () => modal.remove();
+                                
+                                const img = document.createElement('img');
+                                img.src = profile.photo_url;
+                                img.alt = `${profile.full_name}'s Profile Photo`;
+                                img.className = 'w-full h-auto max-h-[80vh] object-contain rounded-xl';
+                                img.style.maxWidth = '100%';
+                                img.style.height = 'auto';
+                                
+                                const title = document.createElement('h3');
+                                title.className = 'text-2xl font-bold text-foreground mb-2 mt-4 text-center';
+                                title.textContent = `${profile.full_name}'s Profile Photo`;
+                                
+                                content.appendChild(closeBtn);
+                                content.appendChild(img);
+                                content.appendChild(title);
+                                modal.appendChild(content);
+                                document.body.appendChild(modal);
+                              }}
+                            >
                               <AvatarImage src={profile.photo_url} />
                               <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground font-bold text-lg">
                                 {profile.full_name?.[0]}
@@ -1633,7 +1670,42 @@ export default function AdminDashboard() {
                             {/* User */}
                             <TableCell>
                               <div className="flex items-center gap-3">
-                                <Avatar className="h-12 w-12 ring-2 ring-amber-400/30">
+                                <Avatar 
+                                  className="h-12 w-12 ring-2 ring-amber-400/30 cursor-pointer hover:scale-105 transition-transform duration-200"
+                                  onClick={() => {
+                                    if (!profile.photo_url) return;
+                                    // Create a modal to show the image in full size
+                                    const modal = document.createElement('div');
+                                    modal.className = 'fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4';
+                                    modal.onclick = () => modal.remove();
+                                    
+                                    const content = document.createElement('div');
+                                    content.className = 'relative max-w-4xl w-full mx-2 sm:mx-4 rounded-3xl bg-gradient-to-br from-background/95 to-card/95 border-4 border-amber-400/60 shadow-2xl p-4 sm:p-6';
+                                    content.onclick = e => e.stopPropagation();
+                                    
+                                    const closeBtn = document.createElement('button');
+                                    closeBtn.className = 'absolute top-4 right-4 text-amber-400 hover:text-foreground bg-background/30 rounded-full p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-all duration-300 z-10';
+                                    closeBtn.innerHTML = '<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+                                    closeBtn.onclick = () => modal.remove();
+                                    
+                                    const img = document.createElement('img');
+                                    img.src = profile.photo_url;
+                                    img.alt = `${profile.full_name}'s Profile Photo`;
+                                    img.className = 'w-full h-auto max-h-[80vh] object-contain rounded-xl';
+                                    img.style.maxWidth = '100%';
+                                    img.style.height = 'auto';
+                                    
+                                    const title = document.createElement('h3');
+                                    title.className = 'text-2xl font-bold text-foreground mb-2 mt-4 text-center';
+                                    title.textContent = `${profile.full_name}'s Profile Photo`;
+                                    
+                                    content.appendChild(closeBtn);
+                                    content.appendChild(img);
+                                    content.appendChild(title);
+                                    modal.appendChild(content);
+                                    document.body.appendChild(modal);
+                                  }}
+                                >
                                   <AvatarImage src={profile.photo_url} />
                                   <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground font-bold">
                                     {profile.full_name?.[0]}
