@@ -1284,7 +1284,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <Table className="min-w-[1400px] text-sm">
+              <Table className="min-w-[1600px] text-sm">
                 <TableHeader>
                   <TableRow className="border-amber-400/20 bg-gradient-to-r from-background/60 to-card/60">
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">User Profile</TableHead>
@@ -1432,77 +1432,77 @@ export default function AdminDashboard() {
                         </TableCell>
 
                         {/* Looking For */}
-                        <TableCell className="py-6 px-4">
-                          <div className="space-y-2">
+                        <TableCell className="py-6 px-3">
+                          <div className="space-y-1 text-xs">
                             <div>
-                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Age Range</span>
+                              <span className="text-muted-foreground text-xs">Age:</span>
                               <div className="text-foreground font-medium">
                                 {preferences.looking_for_age_min && preferences.looking_for_age_max 
-                                  ? `${preferences.looking_for_age_min}-${preferences.looking_for_age_max} years`
-                                  : 'Not specified'
+                                  ? `${preferences.looking_for_age_min}-${preferences.looking_for_age_max}`
+                                  : 'Not set'
                                 }
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Gender</span>
+                              <span className="text-muted-foreground text-xs">Gender:</span>
                               <div className="text-foreground">
-                                {preferences.looking_for_gender || 'Not specified'}
+                                {preferences.looking_for_gender || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Location</span>
-                              <div className="text-foreground text-sm">
-                                {preferences.looking_for_location || 'Not specified'}
+                              <span className="text-muted-foreground text-xs">Location:</span>
+                              <div className="text-foreground text-xs">
+                                {preferences.looking_for_location || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Madhab</span>
-                              <div className="text-foreground text-sm">
-                                {preferences.looking_for_madhab || 'Not specified'}
+                              <span className="text-muted-foreground text-xs">Madhab:</span>
+                              <div className="text-foreground text-xs">
+                                {preferences.looking_for_madhab || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Prayer Frequency</span>
-                              <div className="text-foreground text-sm">
-                                {preferences.looking_for_prayer_frequency || 'Not specified'}
+                              <span className="text-muted-foreground text-xs">Prayer:</span>
+                              <div className="text-foreground text-xs">
+                                {preferences.looking_for_prayer_frequency || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Marriage Timeline</span>
-                              <div className="text-foreground text-sm">
-                                {preferences.looking_for_marriage_timeline || 'Not specified'}
+                              <span className="text-muted-foreground text-xs">Timeline:</span>
+                              <div className="text-foreground text-xs">
+                                {preferences.looking_for_marriage_timeline || 'Not set'}
                               </div>
                             </div>
                           </div>
                         </TableCell>
 
                         {/* Actions */}
-                        <TableCell className="py-6 px-4">
-                          <div className="space-y-3">
-                            <div className="flex gap-2">
+                        <TableCell className="py-6 px-3">
+                          <div className="space-y-2">
+                            <div className="flex gap-1 flex-wrap">
                               <Button 
                                 size="sm"
-                                className="bg-gradient-to-r from-blue-500 to-blue-600 text-foreground font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 rounded-lg shadow-lg" 
+                                className="bg-gradient-to-r from-blue-500 to-blue-600 text-foreground font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 rounded-lg shadow-lg text-xs px-2 py-1" 
                                 onClick={() => { setEditProfile(profile); setShowEditModal(true); }}
                               >
-                                <Edit className="h-4 w-4 mr-1" />
+                                <Edit className="h-3 w-3 mr-1" />
                                 Edit
                               </Button>
                               <Button 
                                 size="sm"
-                                className="bg-gradient-to-r from-red-500 to-red-600 text-foreground font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200 rounded-lg shadow-lg" 
+                                className="bg-gradient-to-r from-red-500 to-red-600 text-foreground font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200 rounded-lg shadow-lg text-xs px-2 py-1" 
                                 onClick={() => deleteProfile(profile.id)}
                               >
-                                <Trash2 className="h-4 w-4 mr-1" />
+                                <Trash2 className="h-3 w-3 mr-1" />
                                 Delete
                               </Button>
                             </div>
                             
-                            <div className="space-y-2">
+                            <div className="space-y-1">
                               <select
                                 value={matchWith[profile.id] || ''}
                                 onChange={e => setMatchWith(prev => ({ ...prev, [profile.id]: e.target.value }))}
-                                className="w-full bg-background/50 border border-amber-400/20 text-foreground rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:ring-amber-400/20"
+                                className="w-full bg-background/50 border border-amber-400/20 text-foreground rounded-lg px-2 py-1 text-xs focus:border-amber-400 focus:ring-amber-400/20"
                               >
                                 <option value="">Match with...</option>
                                 {availableMatchOptions.map(opt => (
@@ -1511,7 +1511,7 @@ export default function AdminDashboard() {
                               </select>
                               <Button
                                 size="sm"
-                                className="w-full bg-gradient-to-r from-amber-400 to-yellow-400 text-foreground font-semibold hover:from-amber-500 hover:to-yellow-500 transition-all duration-200 rounded-lg shadow-lg"
+                                className="w-full bg-gradient-to-r from-amber-400 to-yellow-400 text-foreground font-semibold hover:from-amber-500 hover:to-yellow-500 transition-all duration-200 rounded-lg shadow-lg text-xs px-2 py-1"
                                 disabled={!matchWith[profile.id]}
                                 onClick={async () => {
                                   const otherId = matchWith[profile.id];
@@ -1562,7 +1562,7 @@ export default function AdminDashboard() {
                                   }
                                 }}
                               >
-                                <Heart className="h-4 w-4 mr-1" />
+                                <Heart className="h-3 w-3 mr-1" />
                                 Create Match
                               </Button>
                             </div>
