@@ -173,7 +173,7 @@ export default function Profile() {
     console.log('❌ Profile component: No profile found');
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="bg-gray-900/90 border border-amber-400/30 shadow-2xl rounded-3xl max-w-lg w-full backdrop-blur-sm">
+        <Card className="bg-background/90 border border-amber-400/30 shadow-2xl rounded-3xl max-w-lg w-full backdrop-blur-sm">
           <CardHeader className="text-center pb-6">
             <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
               <User className="h-10 w-10 text-black" />

@@ -1025,7 +1025,7 @@ export default function Dashboard() {
 
       {/* Notification Modal */}
       <Dialog open={showNotificationModal} onOpenChange={setShowNotificationModal}>
-        <DialogContent className="max-w-lg w-full bg-gray-900 border-amber-400/20">
+        <DialogContent className="max-w-lg w-full bg-background border-amber-400/20">
           <DialogHeader>
             <DialogTitle className="text-foreground flex items-center gap-2">
               <Bell className="h-5 w-5 text-amber-400" /> Notifications
