@@ -1380,6 +1380,24 @@ export default function AdminDashboard() {
                 <TableBody>
                   {filteredProfiles.map((profile, idx) => {
                     const preferences = (profile.preferences as any) || {};
+                    
+                    // Debug: Log preferences structure for first profile
+                    if (idx === 0) {
+                      console.log('Profile preferences structure:', preferences);
+                      console.log('Looking for fields:', {
+                        age_min: preferences.looking_for_age_min,
+                        age_max: preferences.looking_for_age_max,
+                        height: preferences.looking_for_height,
+                        residence: preferences.looking_for_residence,
+                        education: preferences.looking_for_education,
+                        profession: preferences.looking_for_profession,
+                        legal_status: preferences.looking_for_legal_status,
+                        marital_status: preferences.looking_for_marital_status,
+                        religious_sect: preferences.looking_for_religious_sect,
+                        ethnicity: preferences.looking_for_ethnicity
+                      });
+                    }
+                    
                     const profession = preferences.profession || '-';
                     const education = preferences.education || '-';
                     const phone = preferences.phone || '-';
@@ -1526,33 +1544,51 @@ export default function AdminDashboard() {
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs">Gender:</span>
+                              <span className="text-muted-foreground text-xs">Height:</span>
                               <div className="text-foreground">
-                                {preferences.looking_for_gender || 'Not set'}
+                                {preferences.looking_for_height || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs">Location:</span>
+                              <span className="text-muted-foreground text-xs">Residence:</span>
                               <div className="text-foreground text-xs">
-                                {preferences.looking_for_location || 'Not set'}
+                                {preferences.looking_for_residence || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs">Madhab:</span>
+                              <span className="text-muted-foreground text-xs">Education:</span>
                               <div className="text-foreground text-xs">
-                                {preferences.looking_for_madhab || 'Not set'}
+                                {preferences.looking_for_education || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs">Prayer:</span>
+                              <span className="text-muted-foreground text-xs">Profession:</span>
                               <div className="text-foreground text-xs">
-                                {preferences.looking_for_prayer_frequency || 'Not set'}
+                                {preferences.looking_for_profession || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs">Timeline:</span>
+                              <span className="text-muted-foreground text-xs">Legal Status:</span>
                               <div className="text-foreground text-xs">
-                                {preferences.looking_for_marriage_timeline || 'Not set'}
+                                {preferences.looking_for_legal_status || 'Not set'}
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground text-xs">Marital Status:</span>
+                              <div className="text-foreground text-xs">
+                                {preferences.looking_for_marital_status || 'Not set'}
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground text-xs">Religious Sect:</span>
+                              <div className="text-foreground text-xs">
+                                {preferences.looking_for_religious_sect || 'Not set'}
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground text-xs">Ethnicity:</span>
+                              <div className="text-foreground text-xs">
+                                {preferences.looking_for_ethnicity || 'Not set'}
                               </div>
                             </div>
                           </div>
