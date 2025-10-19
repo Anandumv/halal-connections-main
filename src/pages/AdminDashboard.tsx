@@ -1282,13 +1282,14 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <Table className="min-w-[1200px] text-sm">
+              <Table className="min-w-[1400px] text-sm">
                 <TableHeader>
                   <TableRow className="border-amber-400/20 bg-gradient-to-r from-background/60 to-card/60">
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">User Profile</TableHead>
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Professional Info</TableHead>
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Location & Preferences</TableHead>
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Religious Info</TableHead>
+                    <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Looking For</TableHead>
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -1389,6 +1390,51 @@ export default function AdminDashboard() {
                             <div>
                               <span className="text-muted-foreground text-xs uppercase tracking-wide">Marriage Timeline</span>
                               <div className="text-foreground">{marriage_timeline}</div>
+                            </div>
+                          </div>
+                        </TableCell>
+
+                        {/* Looking For */}
+                        <TableCell className="py-6 px-4">
+                          <div className="space-y-2">
+                            <div>
+                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Age Range</span>
+                              <div className="text-foreground font-medium">
+                                {preferences.looking_for_age_min && preferences.looking_for_age_max 
+                                  ? `${preferences.looking_for_age_min}-${preferences.looking_for_age_max} years`
+                                  : 'Not specified'
+                                }
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Gender</span>
+                              <div className="text-foreground">
+                                {preferences.looking_for_gender || 'Not specified'}
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Location</span>
+                              <div className="text-foreground text-sm">
+                                {preferences.looking_for_location || 'Not specified'}
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Madhab</span>
+                              <div className="text-foreground text-sm">
+                                {preferences.looking_for_madhab || 'Not specified'}
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Prayer Frequency</span>
+                              <div className="text-foreground text-sm">
+                                {preferences.looking_for_prayer_frequency || 'Not specified'}
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground text-xs uppercase tracking-wide">Marriage Timeline</span>
+                              <div className="text-foreground text-sm">
+                                {preferences.looking_for_marriage_timeline || 'Not specified'}
+                              </div>
                             </div>
                           </div>
                         </TableCell>
