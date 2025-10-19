@@ -979,9 +979,9 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-card/20">
       {/* Header */}
-      <header className="bg-background/90 backdrop-blur-xl border-b border-amber-400/20 sticky top-0 z-50 shadow-2xl">
+      <header className="bg-background/95 backdrop-blur-xl border-b border-amber-400/30 sticky top-0 z-50 shadow-2xl">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             {/* Logo and Title */}
@@ -1185,7 +1185,7 @@ export default function AdminDashboard() {
                         !matches.some(m => (m.user1?.id === profile.id && m.user2?.id === p.id) || (m.user2?.id === profile.id && m.user1?.id === p.id))
                     );
                     return (
-                      <TableRow key={profile.id} className={`border-amber-400/10 ${idx % 2 === 0 ? 'bg-background/30' : 'bg-gray-900/30'} hover:bg-amber-400/5 transition-all duration-300`}>
+                      <TableRow key={profile.id} className={`border-amber-400/10 ${idx % 2 === 0 ? 'bg-background/30' : 'bg-card/30'} hover:bg-amber-400/5 transition-all duration-300`}>
                         {/* User Profile */}
                         <TableCell className="py-6 px-4">
                           <div className="flex items-center gap-4">

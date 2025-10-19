@@ -415,9 +415,9 @@ export default function AdminManagement() {
   }
 
   return (
-    <div className="min-h-screen animated-bg honeycomb-bg">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-card/20">
       {/* Header */}
-      <header className="glass border-b border-amber-400/20 sticky top-0 z-50">
+      <header className="bg-background/95 backdrop-blur-xl border-b border-amber-400/30 sticky top-0 z-50 shadow-2xl">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
