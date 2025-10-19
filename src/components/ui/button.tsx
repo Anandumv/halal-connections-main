@@ -21,7 +21,7 @@ const buttonVariants = cva(
         // Custom matrimony variants
         hero: "bg-gradient-hero text-primary-foreground shadow-glow hover:shadow-elegant hover:scale-105 font-semibold",
         elegant: "bg-gradient-card text-foreground border border-border/50 shadow-soft hover:shadow-elegant hover:bg-primary hover:text-primary-foreground",
-        success: "bg-emerald-deep text-white shadow-soft hover:bg-emerald-deep/90 hover:shadow-elegant",
+        success: "bg-emerald-deep text-foreground shadow-soft hover:bg-emerald-deep/90 hover:shadow-elegant",
         premium: "bg-gradient-accent text-accent-foreground shadow-soft hover:shadow-glow border border-rose-gold/30",
       },
       size: {

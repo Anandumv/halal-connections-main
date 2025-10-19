@@ -446,7 +446,7 @@ export default function AdminManagement() {
                   placeholder="Search users..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-background/50 border-amber-400/20 text-foreground placeholder:text-gray-500 focus:border-amber-400 w-64"
+                  className="pl-10 bg-background/50 border-amber-400/20 text-foreground placeholder:text-muted-foreground focus:border-amber-400 w-64"
                 />
               </div>
             </div>

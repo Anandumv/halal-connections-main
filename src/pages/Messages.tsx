@@ -340,7 +340,7 @@ export default function Messages() {
                   placeholder="Search conversations..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-background/50 border-amber-400/20 text-foreground placeholder:text-gray-500 focus:border-amber-400 w-full"
+                  className="pl-10 bg-background/50 border-amber-400/20 text-foreground placeholder:text-muted-foreground focus:border-amber-400 w-full"
                 />
               </div>
             </CardHeader>
@@ -487,7 +487,7 @@ export default function Messages() {
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
                           onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                          className="flex-1 bg-background/50 border-amber-400/20 text-foreground placeholder:text-gray-500 focus:border-amber-400 w-full"
+                          className="flex-1 bg-background/50 border-amber-400/20 text-foreground placeholder:text-muted-foreground focus:border-amber-400 w-full"
                         />
                         <Button 
                           onClick={sendMessage}

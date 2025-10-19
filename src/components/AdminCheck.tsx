@@ -46,7 +46,7 @@ export const AdminCheck = ({ children, fallback }: AdminCheckProps) => {
     return (
       <div className="flex items-center justify-center p-4">
         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-400"></div>
-        <span className="ml-2 text-sm text-gray-300">Checking admin status...</span>
+        <span className="ml-2 text-sm text-muted-foreground">Checking admin status...</span>
       </div>
     );
   }

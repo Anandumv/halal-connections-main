@@ -9,10 +9,7 @@ export function useTheme() {
     if (saved === 'light' || saved === 'dark') {
       return saved;
     }
-    // Check system preference
-    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      return 'light';
-    }
+    // Default to dark mode (not system preference)
     return 'dark';
   });
 
