@@ -40,12 +40,13 @@ ADD CONSTRAINT notifications_user_id_fkey
 FOREIGN KEY (user_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
 
 -- Update invite_codes table to cascade delete when profiles are deleted
+-- Note: Only created_by can have foreign key constraint since used_by is text type
 ALTER TABLE public.invite_codes 
-DROP CONSTRAINT IF EXISTS invite_codes_created_by_fkey,
-DROP CONSTRAINT IF EXISTS invite_codes_used_by_fkey;
+DROP CONSTRAINT IF EXISTS invite_codes_created_by_fkey;
 
 ALTER TABLE public.invite_codes 
 ADD CONSTRAINT invite_codes_created_by_fkey 
-FOREIGN KEY (created_by) REFERENCES public.profiles(id) ON DELETE SET NULL,
-ADD CONSTRAINT invite_codes_used_by_fkey 
-FOREIGN KEY (used_by) REFERENCES public.profiles(id) ON DELETE SET NULL;
+FOREIGN KEY (created_by) REFERENCES public.profiles(id) ON DELETE SET NULL;
+
+-- used_by is text type and cannot have foreign key constraint to uuid
+-- This will be handled in a separate migration
