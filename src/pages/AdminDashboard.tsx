@@ -252,7 +252,7 @@ function AdminEditProfileForm({ editProfile, saveProfile, handleAdminPhotoUpload
                 modal.onclick = () => modal.remove();
                 
                 const content = document.createElement('div');
-                content.className = 'relative max-w-2xl w-full mx-2 sm:mx-4 rounded-3xl bg-gradient-to-br from-gray-900/95 to-gray-800/95 border-4 border-amber-400/60 shadow-2xl p-6 sm:p-8';
+                content.className = 'relative max-w-2xl w-full mx-2 sm:mx-4 rounded-3xl bg-gradient-to-br from-background/95 to-card/95 border-4 border-amber-400/60 shadow-2xl p-6 sm:p-8';
                 content.onclick = e => e.stopPropagation();
                 
                 const closeBtn = document.createElement('button');
@@ -1158,7 +1158,7 @@ export default function AdminDashboard() {
             <div className="overflow-x-auto">
               <Table className="min-w-[1200px] text-sm">
                 <TableHeader>
-                  <TableRow className="border-amber-400/20 bg-gradient-to-r from-black/60 to-gray-900/60">
+                  <TableRow className="border-amber-400/20 bg-gradient-to-r from-background/60 to-card/60">
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">User Profile</TableHead>
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Professional Info</TableHead>
                     <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Location & Preferences</TableHead>
@@ -1396,7 +1396,7 @@ export default function AdminDashboard() {
 
           {/* Profile Verification Tab */}
           <TabsContent value="profiles" className="space-y-6">
-            <Card className="bg-gradient-to-br from-black/80 to-gray-900/80 border border-amber-400/20 rounded-3xl shadow-2xl backdrop-blur-xl">
+            <Card className="bg-gradient-to-br from-background/80 to-card/80 border border-amber-400/20 rounded-3xl shadow-2xl backdrop-blur-xl">
               <CardHeader className="bg-gradient-to-r from-amber-400/10 via-yellow-400/10 to-amber-400/10 rounded-t-3xl border-b border-amber-400/20">
                 <div className="flex items-center justify-between">
                   <div>
@@ -1506,7 +1506,7 @@ export default function AdminDashboard() {
                                 ) : (
                                   <Button 
                                     size="sm" 
-                                    className="bg-gradient-to-r from-gray-500 to-gray-600 text-foreground font-bold py-2 rounded-lg shadow-lg transition-all duration-200 text-sm" 
+                                    className="bg-gradient-to-r from-muted to-muted-foreground/50 text-foreground font-bold py-2 rounded-lg shadow-lg transition-all duration-200 text-sm" 
                                     disabled
                                   >
                                     ✅ Approved
@@ -1659,7 +1659,7 @@ export default function AdminDashboard() {
           <TabsContent value="analytics" className="space-y-6">
             {/* Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-              <Card className="honeycomb-card bg-gradient-to-br from-black/50 to-black/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
+              <Card className="honeycomb-card bg-gradient-to-br from-background/50 to-background/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>
                   <Users className="h-4 w-4 text-amber-400" />
@@ -1669,7 +1669,7 @@ export default function AdminDashboard() {
                   <p className="text-xs text-muted-foreground">Registered users</p>
                 </CardContent>
               </Card>
-              <Card className="honeycomb-card bg-gradient-to-br from-black/50 to-black/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
+              <Card className="honeycomb-card bg-gradient-to-br from-background/50 to-background/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Verified Users</CardTitle>
                   <CheckCircle className="h-4 w-4 text-green-400" />
@@ -1679,7 +1679,7 @@ export default function AdminDashboard() {
                   <p className="text-xs text-muted-foreground">Profiles verified</p>
                 </CardContent>
               </Card>
-              <Card className="honeycomb-card bg-gradient-to-br from-black/50 to-black/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
+              <Card className="honeycomb-card bg-gradient-to-br from-background/50 to-background/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Pending Verifications</CardTitle>
                   <Activity className="h-4 w-4 text-yellow-400" />
@@ -1689,7 +1689,7 @@ export default function AdminDashboard() {
                   <p className="text-xs text-muted-foreground">Awaiting review</p>
                 </CardContent>
               </Card>
-              <Card className="honeycomb-card bg-gradient-to-br from-black/50 to-black/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
+              <Card className="honeycomb-card bg-gradient-to-br from-background/50 to-background/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Total Matches</CardTitle>
                   <Heart className="h-4 w-4 text-pink-400" />
@@ -1699,7 +1699,7 @@ export default function AdminDashboard() {
                   <p className="text-xs text-muted-foreground">Matches created</p>
                 </CardContent>
               </Card>
-              <Card className="honeycomb-card bg-gradient-to-br from-black/50 to-black/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
+              <Card className="honeycomb-card bg-gradient-to-br from-background/50 to-background/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Successful Matches</CardTitle>
                   <TrendingUp className="h-4 w-4 text-green-400" />
@@ -1709,7 +1709,7 @@ export default function AdminDashboard() {
                   <p className="text-xs text-muted-foreground">Mutual acceptance</p>
                 </CardContent>
               </Card>
-              <Card className="honeycomb-card bg-gradient-to-br from-black/50 to-black/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
+              <Card className="honeycomb-card bg-gradient-to-br from-background/50 to-background/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Active Users</CardTitle>
                   <User className="h-4 w-4 text-blue-400" />
