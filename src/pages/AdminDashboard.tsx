@@ -520,12 +520,39 @@ export default function AdminDashboard() {
   const deleteProfile = async (profileId: string) => {
     if (!window.confirm('Are you sure you want to delete this profile?')) return;
     try {
-      const { error } = await supabase.from('profiles').delete().eq('id', profileId);
-      if (error) {
-        console.error('Delete error details:', error);
-        throw error;
+      console.log('Attempting to delete profile:', profileId);
+      
+      // First check if profile exists
+      const { data: profileData, error: fetchError } = await supabase
+        .from('profiles')
+        .select('id, full_name')
+        .eq('id', profileId)
+        .single();
+      
+      if (fetchError) {
+        console.error('Error fetching profile:', fetchError);
+        throw new Error(`Profile not found: ${fetchError.message}`);
       }
-      toast({ title: 'Deleted', description: 'Profile deleted.' });
+      
+      console.log('Profile found:', profileData);
+      
+      // Delete the profile
+      const { error: deleteError, count } = await supabase
+        .from('profiles')
+        .delete({ count: 'exact' })
+        .eq('id', profileId);
+      
+      if (deleteError) {
+        console.error('Delete error details:', deleteError);
+        throw deleteError;
+      }
+      
+      if (count === 0) {
+        throw new Error('No rows were deleted. Profile may not exist or you may not have permission.');
+      }
+      
+      console.log('Profile deleted successfully, rows affected:', count);
+      toast({ title: 'Deleted', description: 'Profile deleted successfully.' });
       fetchData();
     } catch (error: any) {
       console.error('Error deleting profile:', error);

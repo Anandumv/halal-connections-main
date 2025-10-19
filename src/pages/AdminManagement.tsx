@@ -333,16 +333,38 @@ export default function AdminManagement() {
   const handleDeleteProfile = async (profileId: string) => {
     if (confirm('Are you sure you want to delete this profile? This action cannot be undone.')) {
       try {
-        const { error } = await supabase
+        console.log('Attempting to delete profile:', profileId);
+        
+        // First check if profile exists
+        const { data: profileData, error: fetchError } = await supabase
           .from('profiles')
-          .delete()
+          .select('id, full_name')
+          .eq('id', profileId)
+          .single();
+        
+        if (fetchError) {
+          console.error('Error fetching profile:', fetchError);
+          throw new Error(`Profile not found: ${fetchError.message}`);
+        }
+        
+        console.log('Profile found:', profileData);
+        
+        // Delete the profile
+        const { error: deleteError, count } = await supabase
+          .from('profiles')
+          .delete({ count: 'exact' })
           .eq('id', profileId);
 
-        if (error) {
-          console.error('Delete error details:', error);
-          throw error;
+        if (deleteError) {
+          console.error('Delete error details:', deleteError);
+          throw deleteError;
         }
 
+        if (count === 0) {
+          throw new Error('No rows were deleted. Profile may not exist or you may not have permission.');
+        }
+
+        console.log('Profile deleted successfully, rows affected:', count);
         toast({
           title: "Success",
           description: "Profile deleted successfully",
