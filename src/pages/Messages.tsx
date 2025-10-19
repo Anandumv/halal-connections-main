@@ -53,6 +53,7 @@ export default function Messages() {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [realtimeConnected, setRealtimeConnected] = useState(false);
 
   const userId = searchParams.get('user_id');
   const matchId = searchParams.get('match_id');
@@ -81,6 +82,8 @@ export default function Messages() {
   useEffect(() => {
     if (!selectedConversation) return;
 
+    console.log('Setting up real-time subscription for match:', selectedConversation.match.id);
+
     const channel = supabase
       .channel(`messages:${selectedConversation.match.id}`)
       .on(
@@ -92,16 +95,60 @@ export default function Messages() {
           filter: `match_id=eq.${selectedConversation.match.id}`,
         },
         (payload) => {
+          console.log('New message received via real-time:', payload);
           const newMessage = payload.new as Message;
-          setMessages(prev => [...prev, newMessage]);
+          
+          // Add the new message to the state
+          setMessages(prev => {
+            // Check if message already exists to avoid duplicates
+            const exists = prev.some(msg => msg.id === newMessage.id);
+            if (exists) {
+              console.log('Message already exists, skipping duplicate');
+              return prev;
+            }
+            
+            console.log('Adding new message to state');
+            return [...prev, newMessage];
+          });
+          
+          // Scroll to bottom when new message arrives
+          setTimeout(() => {
+            messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('Real-time subscription status:', status);
+        if (status === 'SUBSCRIBED') {
+          console.log('Successfully subscribed to real-time messages');
+          setRealtimeConnected(true);
+        } else if (status === 'CHANNEL_ERROR') {
+          console.error('Real-time subscription error');
+          setRealtimeConnected(false);
+        } else if (status === 'TIMED_OUT') {
+          console.error('Real-time subscription timed out');
+          setRealtimeConnected(false);
+        }
+      });
 
     return () => {
+      console.log('Cleaning up real-time subscription');
+      setRealtimeConnected(false);
       supabase.removeChannel(channel);
     };
   }, [selectedConversation]);
+
+  // Fallback: Refresh messages if real-time is not connected
+  useEffect(() => {
+    if (selectedConversation && !realtimeConnected) {
+      const interval = setInterval(() => {
+        console.log('Real-time not connected, refreshing messages as fallback');
+        fetchMessages(selectedConversation.match.id);
+      }, 3000); // Check every 3 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [selectedConversation, realtimeConnected]);
 
   const fetchConversations = async () => {
     try {
@@ -252,13 +299,14 @@ export default function Messages() {
 
       setNewMessage('');
       
-      // Refresh messages
-      await fetchMessages(selectedConversation.match.id);
+      // Don't fetch messages again - real-time subscription will handle it
+      // This eliminates the delay caused by the additional fetch
       
-      toast({
-        title: "Message sent",
-        description: "Your message has been sent",
-      });
+      // Optional: Show success toast (can be removed for faster UX)
+      // toast({
+      //   title: "Message sent",
+      //   description: "Your message has been sent",
+      // });
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -478,6 +526,18 @@ export default function Messages() {
                       )}
                       <div ref={messagesEndRef} />
                     </div>
+
+                    {/* Connection Status */}
+                    {selectedConversation && (
+                      <div className="px-2 sm:px-4 py-1 border-t border-amber-400/10">
+                        <div className="flex items-center justify-center gap-2 text-xs">
+                          <div className={`w-2 h-2 rounded-full ${realtimeConnected ? 'bg-green-400' : 'bg-red-400'}`}></div>
+                          <span className="text-muted-foreground">
+                            {realtimeConnected ? 'Real-time connected' : 'Using fallback mode'}
+                          </span>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Message Input */}
                     <div className="p-2 sm:p-4 border-t border-amber-400/20">
