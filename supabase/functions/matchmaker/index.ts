@@ -341,69 +341,71 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Found ${potentialMatches.length} potential matches above threshold ${compatibilityThreshold}`);
 
-    // Create matches (limit to top 50 to avoid overwhelming users)
-    const maxMatches = Math.min(50, potentialMatches.length);
+    // Create pending matches for admin approval (limit to top 20 to avoid overwhelming admins)
+    const maxPendingMatches = Math.min(20, potentialMatches.length);
     
-    console.log(`Creating ${maxMatches} matches...`);
+    console.log(`Creating ${maxPendingMatches} pending matches for admin approval...`);
     
-    for (let i = 0; i < maxMatches; i++) {
+    for (let i = 0; i < maxPendingMatches; i++) {
       const { profile1, profile2, score, aiAnalysis } = potentialMatches[i];
 
       // Sort user IDs to satisfy user1 < user2 constraint
       const [user1, user2] = [profile1.id, profile2.id].sort();
       
-      // Create match with compatibility score and AI reasoning
-      const { error: matchError } = await supabase
-        .from('matches')
-        .insert({
-          user1,
-          user2,
-          created_by: profile1.id,
-          status_user1: 'pending',
-          status_user2: 'pending',
-          compatibility_score: score,
-          ai_reasoning: aiAnalysis.reasoning
-        });
+      // Check if pending match already exists
+      const { data: existingPendingMatch } = await supabase
+        .from('pending_matches')
+        .select('id')
+        .eq('user1', user1)
+        .eq('user2', user2)
+        .single();
 
-      if (matchError) {
-        console.error(`Error creating match between ${profile1.id} and ${profile2.id}:`, matchError);
-        console.error('Match error details:', JSON.stringify(matchError, null, 2));
+      if (existingPendingMatch) {
+        console.log(`Pending match already exists between ${profile1.id} and ${profile2.id}`);
         continue;
       }
 
-      console.log(`Successfully created match between ${profile1.id} and ${profile2.id} with score ${score}`);
+      // Check if actual match already exists
+      const { data: existingMatch } = await supabase
+        .from('matches')
+        .select('id')
+        .eq('user1', user1)
+        .eq('user2', user2)
+        .single();
 
-      // Create notifications for both users
-      const notificationPromises = [
-        supabase.from('notifications').insert({
-          user_id: profile1.id,
-          type: 'new_match',
-          title: 'New Match!',
-          message: `You have a new compatible match (${Math.round(score * 100)}% compatibility)`,
-          payload: { matched_user: profile2.id, compatibility_score: score }
-        }),
-        supabase.from('notifications').insert({
-          user_id: profile2.id,
-          type: 'new_match',
-          title: 'New Match!',
-          message: `You have a new compatible match (${Math.round(score * 100)}% compatibility)`,
-          payload: { matched_user: profile1.id, compatibility_score: score }
-        })
-      ];
+      if (existingMatch) {
+        console.log(`Match already exists between ${profile1.id} and ${profile2.id}`);
+        continue;
+      }
+      
+      // Create pending match for admin approval
+      const { error: pendingMatchError } = await supabase
+        .from('pending_matches')
+        .insert({
+          user1,
+          user2,
+          compatibility_score: score,
+          ai_reasoning: aiAnalysis.reasoning,
+          created_by: profile1.id,
+          status: 'pending'
+        });
 
-      await Promise.all(notificationPromises);
+      if (pendingMatchError) {
+        console.error(`Error creating pending match between ${profile1.id} and ${profile2.id}:`, pendingMatchError);
+        console.error('Pending match error details:', JSON.stringify(pendingMatchError, null, 2));
+        continue;
+      }
+
+      console.log(`Successfully created pending match between ${profile1.id} and ${profile2.id} with score ${score} - awaiting admin approval`);
 
       newMatches++;
-      notifications += 2;
-
-      console.log(`Created match between ${profile1.id} and ${profile2.id} with ${Math.round(score * 100)}% compatibility`);
     }
 
     const summary = {
       status: 'success',
       profiles_processed: profiles?.length || 0,
-      new_matches_created: newMatches,
-      notifications_sent: notifications,
+      pending_matches_created: newMatches,
+      message: 'AI-suggested matches created and awaiting admin approval',
       timestamp: new Date().toISOString()
     };
 

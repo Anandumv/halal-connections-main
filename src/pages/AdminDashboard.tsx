@@ -50,6 +50,11 @@ type Match = Tables<'matches'> & {
   user2?: Profile;
 };
 
+type PendingMatch = Tables<'pending_matches'> & {
+  user1?: Profile;
+  user2?: Profile;
+};
+
 interface Stats {
   totalUsers: number;
   verifiedUsers: number;
@@ -343,6 +348,7 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [matches, setMatches] = useState<Match[]>([]);
+  const [pendingMatches, setPendingMatches] = useState<PendingMatch[]>([]);
   const [stats, setStats] = useState<Stats>({
     totalUsers: 0,
     verifiedUsers: 0,
@@ -406,8 +412,22 @@ export default function AdminDashboard() {
 
       if (matchesError) throw matchesError;
 
+      // Fetch pending matches
+      const { data: pendingMatchesData, error: pendingMatchesError } = await supabase
+        .from('pending_matches')
+        .select(`
+          *,
+          user1:profiles!user1(*),
+          user2:profiles!user2(*)
+        `)
+        .eq('status', 'pending')
+        .order('created_at', { ascending: false });
+
+      if (pendingMatchesError) throw pendingMatchesError;
+
       setProfiles(profilesData || []);
       setMatches(matchesData || []);
+      setPendingMatches(pendingMatchesData || []);
 
       // Calculate stats
       const totalUsers = profilesData?.length || 0;
@@ -850,6 +870,85 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error('Error fetching invite codes:', error);
+    }
+  };
+
+  // Approve pending match
+  const approvePendingMatch = async (pendingMatchId: string) => {
+    try {
+      const pendingMatch = pendingMatches.find(pm => pm.id === pendingMatchId);
+      if (!pendingMatch) return;
+
+      // Create actual match
+      const { error: matchError } = await supabase
+        .from('matches')
+        .insert({
+          user1: pendingMatch.user1,
+          user2: pendingMatch.user2,
+          created_by: pendingMatch.created_by,
+          status_user1: 'pending',
+          status_user2: 'pending',
+          compatibility_score: pendingMatch.compatibility_score,
+          ai_reasoning: pendingMatch.ai_reasoning
+        });
+
+      if (matchError) throw matchError;
+
+      // Update pending match status
+      const { error: updateError } = await supabase
+        .from('pending_matches')
+        .update({ 
+          status: 'approved',
+          reviewed_by: user?.id,
+          reviewed_at: new Date().toISOString()
+        })
+        .eq('id', pendingMatchId);
+
+      if (updateError) throw updateError;
+
+      toast({
+        title: "Match Approved",
+        description: "The AI-suggested match has been approved and created",
+      });
+
+      fetchData(); // Refresh data
+    } catch (error) {
+      console.error('Error approving pending match:', error);
+      toast({
+        title: "Error",
+        description: "Failed to approve match",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Reject pending match
+  const rejectPendingMatch = async (pendingMatchId: string) => {
+    try {
+      const { error } = await supabase
+        .from('pending_matches')
+        .update({ 
+          status: 'rejected',
+          reviewed_by: user?.id,
+          reviewed_at: new Date().toISOString()
+        })
+        .eq('id', pendingMatchId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Match Rejected",
+        description: "The AI-suggested match has been rejected",
+      });
+
+      fetchData(); // Refresh data
+    } catch (error) {
+      console.error('Error rejecting pending match:', error);
+      toast({
+        title: "Error",
+        description: "Failed to reject match",
+        variant: "destructive"
+      });
     }
   };
 
@@ -1370,7 +1469,7 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs defaultValue="profiles" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 bg-background/50 border border-amber-400/20 rounded-2xl p-2 text-sm font-medium">
+          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-4 bg-background/50 border border-amber-400/20 rounded-2xl p-2 text-sm font-medium">
             <TabsTrigger 
               value="profiles" 
               className="text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
@@ -1384,6 +1483,13 @@ export default function AdminDashboard() {
             >
               <Heart className="h-4 w-4 mr-2" />
               Match Management
+            </TabsTrigger>
+            <TabsTrigger 
+              value="pending" 
+              className="text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
+            >
+              <Clock className="h-4 w-4 mr-2" />
+              AI Matches ({pendingMatches.length})
             </TabsTrigger>
             <TabsTrigger 
               value="analytics" 
@@ -1757,6 +1863,94 @@ export default function AdminDashboard() {
                     </div>
                   ))}
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Pending Matches Tab */}
+          <TabsContent value="pending" className="space-y-6">
+            <Card className="bg-gradient-to-br from-background/80 to-card/80 border border-amber-400/20 rounded-3xl shadow-2xl backdrop-blur-xl">
+              <CardHeader className="bg-gradient-to-r from-amber-400/10 via-yellow-400/10 to-amber-400/10 rounded-t-3xl border-b border-amber-400/20">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-foreground text-xl font-bold flex items-center">
+                      <Clock className="h-6 w-6 mr-3 text-amber-400" />
+                      AI-Suggested Matches
+                    </CardTitle>
+                    <CardDescription className="text-muted-foreground mt-2">
+                      Review and approve AI-generated match suggestions
+                    </CardDescription>
+                  </div>
+                  <Badge className="bg-amber-400/20 text-amber-400 border-amber-400/30 px-3 py-1">
+                    {pendingMatches.length} Pending
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6">
+                {pendingMatches.length === 0 ? (
+                  <div className="text-center py-12">
+                    <Clock className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-foreground mb-2">No Pending Matches</h3>
+                    <p className="text-muted-foreground">Run the AI Matchmaker to generate new match suggestions</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {pendingMatches.map((pendingMatch) => (
+                      <Card key={pendingMatch.id} className="bg-card/50 border-amber-400/20 rounded-xl">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                              <div className="flex -space-x-2">
+                                <Avatar className="h-12 w-12 ring-2 ring-amber-400/50">
+                                  <AvatarImage src={pendingMatch.user1?.photo_url} />
+                                  <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground">
+                                    {pendingMatch.user1?.full_name?.[0]}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <Avatar className="h-12 w-12 ring-2 ring-amber-400/50">
+                                  <AvatarImage src={pendingMatch.user2?.photo_url} />
+                                  <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground">
+                                    {pendingMatch.user2?.full_name?.[0]}
+                                  </AvatarFallback>
+                                </Avatar>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-foreground">
+                                  {pendingMatch.user1?.full_name} & {pendingMatch.user2?.full_name}
+                                </div>
+                                <div className="text-sm text-muted-foreground">
+                                  {Math.round((pendingMatch.compatibility_score || 0) * 100)}% Compatibility
+                                </div>
+                                <div className="text-xs text-muted-foreground mt-1">
+                                  {pendingMatch.ai_reasoning}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button
+                                onClick={() => approvePendingMatch(pendingMatch.id)}
+                                className="bg-green-500/20 text-green-400 border-green-400/30 hover:bg-green-500/30"
+                                size="sm"
+                              >
+                                <CheckCircle className="h-4 w-4 mr-2" />
+                                Approve
+                              </Button>
+                              <Button
+                                onClick={() => rejectPendingMatch(pendingMatch.id)}
+                                variant="outline"
+                                className="border-red-400/30 text-red-400 hover:bg-red-400/10"
+                                size="sm"
+                              >
+                                <XCircle className="h-4 w-4 mr-2" />
+                                Reject
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
