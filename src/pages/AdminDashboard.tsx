@@ -1366,15 +1366,15 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <Table className="min-w-[1600px] text-sm">
+              <Table className="w-full text-sm">
                 <TableHeader>
                   <TableRow className="border-amber-400/20 bg-gradient-to-r from-background/60 to-card/60">
-                    <TableHead className="text-amber-400 font-bold text-base py-6 px-4">User Profile</TableHead>
-                    <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Professional Info</TableHead>
-                    <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Location & Preferences</TableHead>
-                    <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Religious Info</TableHead>
-                    <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Looking For</TableHead>
-                    <TableHead className="text-amber-400 font-bold text-base py-6 px-4">Actions</TableHead>
+                    <TableHead className="text-amber-400 font-bold text-sm py-4 px-2">User Profile</TableHead>
+                    <TableHead className="text-amber-400 font-bold text-sm py-4 px-2">Professional Info</TableHead>
+                    <TableHead className="text-amber-400 font-bold text-sm py-4 px-2">Location & Preferences</TableHead>
+                    <TableHead className="text-amber-400 font-bold text-sm py-4 px-2">Religious Info</TableHead>
+                    <TableHead className="text-amber-400 font-bold text-sm py-4 px-2">Looking For</TableHead>
+                    <TableHead className="text-amber-400 font-bold text-sm py-4 px-2">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -1416,10 +1416,10 @@ export default function AdminDashboard() {
                     return (
                       <TableRow key={profile.id} className={`border-amber-400/10 ${idx % 2 === 0 ? 'bg-background/30' : 'bg-card/30'} hover:bg-amber-400/5 transition-all duration-300`}>
                         {/* User Profile */}
-                        <TableCell className="py-6 px-4">
-                          <div className="flex items-center gap-4">
+                        <TableCell className="py-4 px-2">
+                          <div className="flex items-center gap-2">
                             <Avatar 
-                              className="h-16 w-16 ring-2 ring-amber-400/50 shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
+                              className="h-12 w-12 ring-2 ring-amber-400/50 shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
                               onClick={() => {
                                 if (!profile.photo_url) return;
                                 // Create a modal to show the image in full size
@@ -1455,14 +1455,14 @@ export default function AdminDashboard() {
                               }}
                             >
                               <AvatarImage src={profile.photo_url} />
-                              <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground font-bold text-lg">
+                              <AvatarFallback className="bg-gradient-to-br from-amber-400 to-yellow-400 text-foreground font-bold text-sm">
                                 {profile.full_name?.[0]}
                               </AvatarFallback>
                             </Avatar>
                             <div className="flex-1">
-                              <div className="font-bold text-foreground text-lg mb-1">{profile.full_name}</div>
-                              <div className="text-sm text-muted-foreground mb-1">{profile.gender}, {profile.age} years</div>
-                              <div className="text-sm text-muted-foreground mb-2">{profile.email}</div>
+                              <div className="font-bold text-foreground text-sm mb-1">{profile.full_name}</div>
+                              <div className="text-xs text-muted-foreground mb-1">{profile.gender}, {profile.age} years</div>
+                              <div className="text-xs text-muted-foreground mb-2">{profile.email}</div>
                               <div className="flex gap-2">
                                 {profile.verified ? (
                                   <Badge className="bg-green-500/20 text-green-400 border-green-400/30">✓ Verified</Badge>
@@ -1478,7 +1478,7 @@ export default function AdminDashboard() {
                         </TableCell>
 
                         {/* Professional Info */}
-                        <TableCell className="py-6 px-4">
+                        <TableCell className="py-4 px-2">
                           <div className="space-y-2">
                             <div>
                               <span className="text-muted-foreground text-xs uppercase tracking-wide">Profession</span>
@@ -1496,7 +1496,7 @@ export default function AdminDashboard() {
                         </TableCell>
 
                         {/* Location & Preferences */}
-                        <TableCell className="py-6 px-4">
+                        <TableCell className="py-4 px-2">
                           <div className="space-y-2">
                             <div>
                               <span className="text-muted-foreground text-xs uppercase tracking-wide">Location</span>
@@ -1514,7 +1514,7 @@ export default function AdminDashboard() {
                         </TableCell>
 
                         {/* Religious Info */}
-                        <TableCell className="py-6 px-4">
+                        <TableCell className="py-4 px-2">
                           <div className="space-y-2">
                             <div>
                               <span className="text-muted-foreground text-xs uppercase tracking-wide">Madhab</span>
@@ -1532,7 +1532,7 @@ export default function AdminDashboard() {
                         </TableCell>
 
                         {/* Looking For */}
-                        <TableCell className="py-6 px-3">
+                        <TableCell className="py-6 px-2">
                           <div className="space-y-1 text-xs">
                             <div>
                               <span className="text-muted-foreground text-xs">Age:</span>
@@ -1541,18 +1541,6 @@ export default function AdminDashboard() {
                                   ? `${preferences.looking_for_age_min}-${preferences.looking_for_age_max}`
                                   : 'Not set'
                                 }
-                              </div>
-                            </div>
-                            <div>
-                              <span className="text-muted-foreground text-xs">Height:</span>
-                              <div className="text-foreground">
-                                {preferences.looking_for_height || 'Not set'}
-                              </div>
-                            </div>
-                            <div>
-                              <span className="text-muted-foreground text-xs">Residence:</span>
-                              <div className="text-foreground text-xs">
-                                {preferences.looking_for_residence || 'Not set'}
                               </div>
                             </div>
                             <div>
@@ -1568,34 +1556,22 @@ export default function AdminDashboard() {
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs">Legal Status:</span>
-                              <div className="text-foreground text-xs">
-                                {preferences.looking_for_legal_status || 'Not set'}
-                              </div>
-                            </div>
-                            <div>
-                              <span className="text-muted-foreground text-xs">Marital Status:</span>
+                              <span className="text-muted-foreground text-xs">Marital:</span>
                               <div className="text-foreground text-xs">
                                 {preferences.looking_for_marital_status || 'Not set'}
                               </div>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-xs">Religious Sect:</span>
+                              <span className="text-muted-foreground text-xs">Legal:</span>
                               <div className="text-foreground text-xs">
-                                {preferences.looking_for_religious_sect || 'Not set'}
-                              </div>
-                            </div>
-                            <div>
-                              <span className="text-muted-foreground text-xs">Ethnicity:</span>
-                              <div className="text-foreground text-xs">
-                                {preferences.looking_for_ethnicity || 'Not set'}
+                                {preferences.looking_for_legal_status || 'Not set'}
                               </div>
                             </div>
                           </div>
                         </TableCell>
 
                         {/* Actions */}
-                        <TableCell className="py-6 px-3">
+                        <TableCell className="py-4 px-2">
                           <div className="space-y-2">
                             <div className="flex gap-1 flex-wrap">
                               <Button 
