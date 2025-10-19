@@ -379,6 +379,9 @@ export default function AdminDashboard() {
   const [newInviteCode, setNewInviteCode] = useState('');
   const [inviteCodeQuantity, setInviteCodeQuantity] = useState(1);
   const [inviteCodeExpiry, setInviteCodeExpiry] = useState('1');
+  const [sortBy, setSortBy] = useState<'age' | 'gender' | 'name' | 'created_at'>('created_at');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [genderFilter, setGenderFilter] = useState<'all' | 'male' | 'female'>('all');
 
   // Admin check is now handled by AdminRoute component in App.tsx
   // No need to check admin status here
@@ -691,10 +694,47 @@ export default function AdminDashboard() {
     }
   };
 
-  const filteredProfiles = profiles.filter(p =>
-    p.full_name?.toLowerCase().includes(search.toLowerCase()) ||
-    p.email?.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredProfiles = profiles
+    .filter(p => {
+      // Search filter
+      const matchesSearch = p.full_name?.toLowerCase().includes(search.toLowerCase()) ||
+        p.email?.toLowerCase().includes(search.toLowerCase());
+      
+      // Gender filter
+      const matchesGender = genderFilter === 'all' || p.gender === genderFilter;
+      
+      return matchesSearch && matchesGender;
+    })
+    .sort((a, b) => {
+      let aValue: any;
+      let bValue: any;
+      
+      switch (sortBy) {
+        case 'age':
+          aValue = a.age || 0;
+          bValue = b.age || 0;
+          break;
+        case 'gender':
+          aValue = a.gender || '';
+          bValue = b.gender || '';
+          break;
+        case 'name':
+          aValue = a.full_name || '';
+          bValue = b.full_name || '';
+          break;
+        case 'created_at':
+        default:
+          aValue = new Date(a.created_at || '').getTime();
+          bValue = new Date(b.created_at || '').getTime();
+          break;
+      }
+      
+      if (sortOrder === 'asc') {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    });
 
   // Filter only pending profiles for the Profile Verification tab
   const pendingProfiles = profiles.filter(
@@ -1268,6 +1308,48 @@ export default function AdminDashboard() {
               className="bg-background/50 border-amber-400/20 text-foreground placeholder:text-muted-foreground focus:border-amber-400 focus:ring-amber-400/20 rounded-xl pl-12 pr-4 py-3 w-full shadow-lg"
             />
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          </div>
+        </div>
+
+        {/* Sorting and Filtering Controls */}
+        <div className="mb-6 flex flex-wrap gap-4 items-center">
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-foreground">Sort by:</label>
+            <select
+              value={sortBy}
+              onChange={e => setSortBy(e.target.value as any)}
+              className="bg-background/50 border border-amber-400/20 text-foreground rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:ring-amber-400/20"
+            >
+              <option value="created_at">Join Date</option>
+              <option value="age">Age</option>
+              <option value="gender">Gender</option>
+              <option value="name">Name</option>
+            </select>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-foreground">Order:</label>
+            <select
+              value={sortOrder}
+              onChange={e => setSortOrder(e.target.value as any)}
+              className="bg-background/50 border border-amber-400/20 text-foreground rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:ring-amber-400/20"
+            >
+              <option value="desc">Descending</option>
+              <option value="asc">Ascending</option>
+            </select>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-foreground">Gender:</label>
+            <select
+              value={genderFilter}
+              onChange={e => setGenderFilter(e.target.value as any)}
+              className="bg-background/50 border border-amber-400/20 text-foreground rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:ring-amber-400/20"
+            >
+              <option value="all">All</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
           </div>
         </div>
       </div>
