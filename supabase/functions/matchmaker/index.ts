@@ -19,9 +19,10 @@ async function analyzeCompatibilityWithOpenAI(profile1: Profile, profile2: Profi
   
   if (!openaiApiKey) {
     console.log('OpenAI API key not found, falling back to custom algorithm');
+    const customScore = calculateCompatibility(profile1, profile2);
     return {
-      score: calculateCompatibility(profile1, profile2),
-      reasoning: 'Custom algorithm analysis'
+      score: customScore,
+      reasoning: `Custom algorithm analysis: ${Math.round(customScore * 100)}% compatibility based on religious, location, age, education, timeline, and interest preferences.`
     };
   }
 
@@ -262,6 +263,21 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Found ${profiles?.length || 0} complete profiles`);
 
+    if (!profiles || profiles.length < 2) {
+      console.log('Not enough profiles to create matches');
+      return new Response(JSON.stringify({
+        status: 'success',
+        profiles_processed: profiles?.length || 0,
+        new_matches_created: 0,
+        notifications_sent: 0,
+        message: 'Not enough profiles to create matches',
+        timestamp: new Date().toISOString()
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+
     // Get existing matches to avoid duplicates
     const { data: existingMatches, error: matchesError } = await supabase
       .from('matches')
@@ -282,11 +298,14 @@ const handler = async (req: Request): Promise<Response> => {
     let notifications = 0;
     const compatibilityThreshold = 0.3; // Minimum compatibility score to create a match
 
+    console.log(`Checking ${existingPairs.size} existing matches to avoid duplicates`);
+
     // Generate potential matches with compatibility scores
     const potentialMatches: Array<{
       profile1: Profile;
       profile2: Profile;
       score: number;
+      aiAnalysis: any;
     }> = [];
 
     for (let i = 0; i < (profiles?.length || 0); i++) {
@@ -310,7 +329,8 @@ const handler = async (req: Request): Promise<Response> => {
           potentialMatches.push({
             profile1,
             profile2,
-            score: compatibilityScore
+            score: compatibilityScore,
+            aiAnalysis: aiAnalysis
           });
         }
       }
@@ -319,32 +339,39 @@ const handler = async (req: Request): Promise<Response> => {
     // Sort by compatibility score (highest first)
     potentialMatches.sort((a, b) => b.score - a.score);
 
+    console.log(`Found ${potentialMatches.length} potential matches above threshold ${compatibilityThreshold}`);
+
     // Create matches (limit to top 50 to avoid overwhelming users)
     const maxMatches = Math.min(50, potentialMatches.length);
     
+    console.log(`Creating ${maxMatches} matches...`);
+    
     for (let i = 0; i < maxMatches; i++) {
-      const { profile1, profile2, score } = potentialMatches[i];
+      const { profile1, profile2, score, aiAnalysis } = potentialMatches[i];
 
       // Sort user IDs to satisfy user1 < user2 constraint
       const [user1, user2] = [profile1.id, profile2.id].sort();
       
-        // Create match with compatibility score and AI reasoning
-        const { error: matchError } = await supabase
-          .from('matches')
-          .insert({
-            user1,
-            user2,
-            created_by: profile1.id,
-            status_user1: 'pending',
-            status_user2: 'pending',
-            compatibility_score: score,
-            ai_reasoning: aiAnalysis.reasoning
-          });
+      // Create match with compatibility score and AI reasoning
+      const { error: matchError } = await supabase
+        .from('matches')
+        .insert({
+          user1,
+          user2,
+          created_by: profile1.id,
+          status_user1: 'pending',
+          status_user2: 'pending',
+          compatibility_score: score,
+          ai_reasoning: aiAnalysis.reasoning
+        });
 
       if (matchError) {
-        console.error('Error creating match:', matchError);
+        console.error(`Error creating match between ${profile1.id} and ${profile2.id}:`, matchError);
+        console.error('Match error details:', JSON.stringify(matchError, null, 2));
         continue;
       }
+
+      console.log(`Successfully created match between ${profile1.id} and ${profile2.id} with score ${score}`);
 
       // Create notifications for both users
       const notificationPromises = [
