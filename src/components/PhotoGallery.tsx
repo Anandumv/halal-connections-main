@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, X, Expand, ZoomIn, ZoomOut, RotateCcw, RotateCw } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -55,15 +55,15 @@ export default function PhotoGallery({
     setRotation(0);
   };
 
-  const nextModalPhoto = () => {
+  const nextModalPhoto = useCallback(() => {
     setModalIndex((prev) => (prev + 1) % photos.length);
-  };
+  }, [photos.length]);
 
-  const prevModalPhoto = () => {
+  const prevModalPhoto = useCallback(() => {
     setModalIndex((prev) => (prev - 1 + photos.length) % photos.length);
     setZoom(1);
     setRotation(0);
-  };
+  }, [photos.length]);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev * 1.5, 5));

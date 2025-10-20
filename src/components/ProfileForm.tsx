@@ -332,11 +332,11 @@ export function ProfileForm({ open, onOpenChange, initialValues, userId, onSave 
       });
 
       return uploadedUrls;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Photo upload failed:', error);
       toast({
         title: 'Photo upload failed',
-        description: error.message || 'Failed to upload photos. Please try again.',
+        description: error instanceof Error ? error.message : 'Failed to upload photos. Please try again.',
         variant: 'destructive',
       });
       throw error;
