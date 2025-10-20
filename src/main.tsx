@@ -5,16 +5,19 @@ import { useTheme } from './hooks/useTheme'
 import App from './App.tsx'
 import './index.css'
 
-// Set dark mode as default before React renders
+// Set theme based on system preference before React renders
 const root = document.documentElement;
-if (!localStorage.getItem('theme')) {
-  root.classList.remove('light');
-  root.classList.add('dark');
-  localStorage.setItem('theme', 'dark');
-} else {
-  const savedTheme = localStorage.getItem('theme');
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light' || savedTheme === 'dark') {
   root.classList.remove('light', 'dark');
-  root.classList.add(savedTheme || 'dark');
+  root.classList.add(savedTheme);
+} else {
+  // Detect system preference
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const systemTheme = prefersDark ? 'dark' : 'light';
+  root.classList.remove('light', 'dark');
+  root.classList.add(systemTheme);
+  localStorage.setItem('theme', systemTheme);
 }
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {

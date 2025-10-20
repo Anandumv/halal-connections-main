@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ProfileForm } from '@/components/ProfileForm';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { 
   User, 
   ArrowLeft,
@@ -201,6 +202,9 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      
       {/* Background Pattern */}
       <div className="absolute inset-0 honeycomb-bg opacity-10"></div>
       

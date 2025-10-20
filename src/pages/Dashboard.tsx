@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { useToast } from '@/hooks/use-toast';
 import { ProfileForm } from '@/components/ProfileForm';
 import HoneycombLogo from '@/components/HoneycombLogo';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { 
   Crown, 
   MessageCircle, 
@@ -558,6 +559,9 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      
       {/* Background Pattern */}
       <div className="absolute inset-0 honeycomb-bg opacity-10"></div>
       

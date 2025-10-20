@@ -9,7 +9,12 @@ export function useTheme() {
     if (saved === 'light' || saved === 'dark') {
       return saved;
     }
-    // Default to dark mode (not system preference)
+    // Detect system preference
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      return prefersDark ? 'dark' : 'light';
+    }
+    // Fallback to dark mode
     return 'dark';
   });
 

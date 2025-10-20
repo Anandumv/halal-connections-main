@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { ProfileCard } from '@/components/ProfileCard';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface Profile {
   id: string;
@@ -76,6 +77,9 @@ const AdminProfiles = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      
       <div className="container mx-auto px-4 py-8">
         <Button variant="outline" onClick={() => navigate("/dashboard")} className="mb-6">Back to Dashboard</Button>
         <h1 className="text-3xl font-bold mb-6">Pending Profile Verifications</h1>

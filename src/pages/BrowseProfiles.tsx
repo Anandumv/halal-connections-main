@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import PhotoGallery from '@/components/PhotoGallery';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { 
   ArrowLeft,
   Heart,
@@ -160,6 +161,9 @@ export default function BrowseProfiles() {
 
   return (
     <div className="min-h-screen animated-bg honeycomb-bg">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-xl border-b border-amber-400/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">

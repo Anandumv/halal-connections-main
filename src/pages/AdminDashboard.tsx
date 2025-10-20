@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
 import { Tables } from '@/integrations/supabase/types';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { 
   Users, 
   UserCheck, 
@@ -1148,6 +1149,9 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-card/20">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      
       {/* Header */}
       <header className="bg-background/95 backdrop-blur-xl border-b border-amber-400/30 sticky top-0 z-50 shadow-2xl">
         <div className="container mx-auto px-4 py-6">

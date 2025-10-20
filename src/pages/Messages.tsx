@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { 
   MessageCircle, 
   Send, 
@@ -344,6 +345,9 @@ export default function Messages() {
 
   return (
     <div className="min-h-screen animated-bg honeycomb-bg">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      
       {/* Header */}
       <header className="glass border-b border-amber-400/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
