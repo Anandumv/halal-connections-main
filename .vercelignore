@@ -1,0 +1,19 @@
+# Ignore development files
+*.log
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore build artifacts that might conflict
+dist-ssr
+*.local
+
+# Ignore SQL files and documentation
+*.sql
+*.md
+scripts/
+
+# Ignore Supabase local files
+supabase/.branches
+supabase/.temp

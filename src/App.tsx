@@ -159,14 +159,13 @@ function App() {
     console.log('VITE_SUPABASE_ANON_KEY:', import.meta.env.VITE_SUPABASE_ANON_KEY ? 'Set' : 'Missing');
   }, []);
   
-  try {
-    const { user, loading: authLoading, error: authError, session } = useAuth();
-    const { isAdmin, loading: adminLoading, error: adminError } = useAdminStatus();
+  const { user, loading: authLoading, error: authError, session } = useAuth();
+  const { isAdmin, loading: adminLoading, error: adminError } = useAdminStatus();
 
-    // Add debugging
-    console.log('App State:', { user, authLoading, authError, adminLoading, adminError });
+  // Add debugging
+  console.log('App State:', { user, authLoading, authError, adminLoading, adminError });
 
-    if (error || authError || adminError) {
+  if (error || authError || adminError) {
       console.log('Rendering error state:', { error, authError, adminError });
       return (
         <div className="min-h-screen bg-red-900 text-foreground flex items-center justify-center p-4">
@@ -285,23 +284,6 @@ function App() {
         </div>
       </Router>
     );
-  } catch (err) {
-    console.error('App Error:', err);
-    return (
-      <div className="min-h-screen bg-red-900 text-foreground flex items-center justify-center p-4">
-        <div className="text-center max-w-2xl bg-white text-black p-8 rounded-lg shadow-2xl">
-          <h1 className="text-3xl font-bold text-red-600 mb-6">🚨 Application Error</h1>
-          <p className="text-lg mb-6 text-gray-800">{err instanceof Error ? err.message : 'Unknown error occurred'}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="bg-red-600 text-foreground px-6 py-3 rounded-lg hover:bg-red-700 font-semibold"
-          >
-            Reload Page
-          </button>
-        </div>
-      </div>
-    );
-  }
 }
 
 export default App;

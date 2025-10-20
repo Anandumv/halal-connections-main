@@ -125,7 +125,7 @@ export default function PhotoGallery({
       document.addEventListener('keydown', handleKeyDown);
       return () => document.removeEventListener('keydown', handleKeyDown);
     }
-  }, [isModalOpen, photos.length]);
+  }, [isModalOpen, photos.length, nextModalPhoto, prevModalPhoto]);
 
   return (
     <>
