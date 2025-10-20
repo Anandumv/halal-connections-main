@@ -976,6 +976,30 @@ export default function AdminDashboard() {
 
       if (updateError) throw updateError;
 
+      // Send notification email via Edge Function
+      try {
+        const fnBase = import.meta.env.VITE_SUPABASE_URL?.replace('.co', '.co/functions/v1');
+        if (fnBase && import.meta.env.VITE_SUPABASE_ANON_KEY) {
+          await fetch(`${fnBase}/send-match-email`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({
+              match_id: `approved-${pendingMatchId}`,
+              user1_id: pendingMatch.user1,
+              user2_id: pendingMatch.user2,
+              type: 'new_match',
+            }),
+          });
+        } else {
+          console.warn('Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY for email dispatch');
+        }
+      } catch (emailErr) {
+        console.error('send-match-email failed', emailErr);
+      }
+
       toast({
         title: "Match Approved",
         description: "The AI-suggested match has been approved and created",
