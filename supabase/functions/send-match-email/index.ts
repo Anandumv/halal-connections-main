@@ -27,6 +27,15 @@ Deno.serve(async (req) => {
       throw new Error('Missing required parameters');
     }
 
+    // Allow disabling emails in non-production environments
+    const sendEmails = (Deno.env.get('SEND_EMAILS') || 'true').toLowerCase() === 'true';
+    if (!sendEmails) {
+      return new Response(
+        JSON.stringify({ success: true, message: 'Email sending disabled (SEND_EMAILS=false)' }),
+        { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (!resendApiKey) {
       throw new Error('RESEND_API_KEY not configured');
@@ -76,6 +85,9 @@ Deno.serve(async (req) => {
         throw new Error('Invalid email type');
     }
 
+    // Sender: configurable, with safe default for testing
+    const from = Deno.env.get('RESEND_FROM') || 'onboarding@resend.dev';
+
     // Send email via Resend
     const emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -84,7 +96,7 @@ Deno.serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Bee Hive Match <noreply@beehivematch.com>',
+        from,
         to: [recipient.email],
         subject,
         html: htmlContent,
@@ -92,8 +104,12 @@ Deno.serve(async (req) => {
     });
 
     if (!emailResponse.ok) {
-      const errorData = await emailResponse.json();
-      throw new Error(`Resend API error: ${errorData.message}`);
+      let errorText = await emailResponse.text();
+      try {
+        const errorData = JSON.parse(errorText);
+        errorText = errorData.message || JSON.stringify(errorData);
+      } catch (_) {}
+      throw new Error(`Resend API error (${emailResponse.status}): ${errorText}`);
     }
 
     const emailData = await emailResponse.json();
@@ -102,7 +118,9 @@ Deno.serve(async (req) => {
       JSON.stringify({ 
         success: true, 
         message: 'Email sent successfully',
-        email_id: emailData.id 
+        email_id: emailData.id,
+        to: recipient.email,
+        type,
       }),
       { 
         status: 200,
