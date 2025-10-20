@@ -156,7 +156,7 @@ function AdminEditProfileForm({ editProfile, saveProfile, handleAdminPhotoUpload
       {/* Details Section */}
       <div className="mb-6">
         <h3 className="text-lg font-bold text-amber-400 mb-4">Details</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mobile-grid">
           <Input {...form.register('full_name')} placeholder="Full Name" className="bg-background/50 border-amber-400/20 text-foreground" />
           <Input 
             type="number" 
@@ -218,7 +218,7 @@ function AdminEditProfileForm({ editProfile, saveProfile, handleAdminPhotoUpload
       {/* Location Section */}
       <div className="mb-4">
         <h3 className="text-lg font-bold text-amber-400 mb-2">Location</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="mobile-grid">
           <Input {...form.register('location')} placeholder="Location (City, Country)" className="bg-background/50 border-amber-400/20 text-foreground" />
           <div className="flex items-center gap-2 mt-2">
             <input type="checkbox" {...form.register('will_relocate')} className="h-5 w-5 accent-amber-400" />
@@ -229,7 +229,7 @@ function AdminEditProfileForm({ editProfile, saveProfile, handleAdminPhotoUpload
       {/* Religion Section */}
       <div className="mb-4">
         <h3 className="text-lg font-bold text-amber-400 mb-2">Religion</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="mobile-grid">
           <Input {...form.register('madhab')} placeholder="Madhab" className="bg-background/50 border-amber-400/20 text-foreground" />
           <Input {...form.register('prayer_frequency')} placeholder="Prayer Frequency" className="bg-background/50 border-amber-400/20 text-foreground" />
           <Input {...form.register('marriage_timeline')} placeholder="Marriage Timeline" className="bg-background/50 border-amber-400/20 text-foreground" />
@@ -1155,7 +1155,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <header className="bg-background/95 backdrop-blur-xl border-b border-amber-400/30 sticky top-0 z-50 shadow-2xl">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="mobile-flex items-center justify-between gap-6">
             {/* Logo and Title */}
             <div className="flex items-center space-x-4">
               <div className="relative">
@@ -1175,7 +1175,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="mobile-flex items-center gap-3">
               <Badge variant="outline" className="border-green-400/30 text-green-400 bg-green-400/10 text-sm font-medium px-3 py-1">
                 <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
                 Admin Access
@@ -1216,7 +1216,7 @@ export default function AdminDashboard() {
 
       {/* Stats Overview */}
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+        <div className="mobile-grid mb-8">
           <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border-blue-400/20 hover:border-blue-400/40 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -1677,7 +1677,7 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs defaultValue="profiles" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-4 bg-background/50 border border-amber-400/20 rounded-2xl p-2 text-sm font-medium">
+          <TabsList className="mobile-grid w-full bg-background/50 border border-amber-400/20 rounded-2xl p-2 text-sm font-medium">
             <TabsTrigger 
               value="profiles" 
               className="text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-yellow-400 rounded-xl transition-all duration-300 py-3"
@@ -2007,7 +2007,7 @@ export default function AdminDashboard() {
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-6">
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <div className="mobile-grid mb-8">
               <Card className="honeycomb-card bg-gradient-to-br from-background/50 to-background/30 border-amber-400/20 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>

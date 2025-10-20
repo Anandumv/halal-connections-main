@@ -233,7 +233,7 @@ export default function Settings() {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 relative z-10">
         <Tabs defaultValue="notifications" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 bg-background/80 backdrop-blur-xl border border-amber-400/20">
+          <TabsList className="mobile-grid w-full bg-background/80 backdrop-blur-xl border border-amber-400/20">
             <TabsTrigger value="notifications" className="data-[state=active]:bg-amber-400 data-[state=active]:text-black">
               <Bell className="h-4 w-4 mr-2" />
               Notifications

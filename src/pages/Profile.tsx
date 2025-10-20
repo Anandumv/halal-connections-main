@@ -481,7 +481,7 @@ export default function Profile() {
               )}
               
               {/* Additional Details Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="mobile-grid">
                 <div className="space-y-4">
                   <h4 className="text-lg font-semibold text-foreground border-b border-amber-400/20 pb-2">
                     Personal Information
@@ -631,7 +631,7 @@ export default function Profile() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="mobile-grid">
                   <div className="space-y-3">
                     {(profile.preferences as any)?.looking_for_age_min && (profile.preferences as any)?.looking_for_age_max && (
                       <div className="flex justify-between">
@@ -707,7 +707,7 @@ export default function Profile() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="mobile-grid">
                 <div className="text-center p-4 bg-card/50 rounded-lg">
                   <div className="text-2xl font-bold text-amber-400 mb-1">0</div>
                   <div className="text-muted-foreground text-sm">Matches</div>

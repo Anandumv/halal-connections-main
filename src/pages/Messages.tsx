@@ -376,7 +376,7 @@ export default function Messages() {
       </header>
 
       <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 h-[calc(100vh-200px)]">
+        <div className="mobile-grid gap-3 sm:gap-6 h-[calc(100vh-200px)]">
           {/* Conversations List */}
           <Card className="honeycomb-card lg:col-span-1">
             <CardHeader>
@@ -457,7 +457,7 @@ export default function Messages() {
               <>
                 {/* Chat Header */}
                 <CardHeader className="border-b border-amber-400/20">
-                  <div className="flex flex-col sm:flex-row items-center sm:items-center justify-between gap-2 sm:gap-0">
+                  <div className="mobile-flex items-center justify-between">
                     <div className="flex items-center space-x-2 sm:space-x-3">
                       <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
                         <AvatarImage src={selectedConversation.otherUser.photo_url || undefined} />
@@ -545,7 +545,7 @@ export default function Messages() {
 
                     {/* Message Input */}
                     <div className="p-2 sm:p-4 border-t border-amber-400/20">
-                      <div className="flex flex-col sm:flex-row gap-2">
+                      <div className="mobile-flex gap-2">
                         <Input
                           placeholder="Type a message..."
                           value={newMessage}

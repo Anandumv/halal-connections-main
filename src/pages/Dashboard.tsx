@@ -568,8 +568,8 @@ export default function Dashboard() {
       {/* Solid Black Background */}
       <div className="absolute inset-0 bg-background"></div>
 
-      {/* Top Profile Header - Exact match to reference */}
-      <header className="bg-background/80 backdrop-blur-xl border-b border-amber-400/20 p-4 relative z-10">
+      {/* Top Profile Header - Mobile optimized */}
+      <header className="bg-background/80 backdrop-blur-xl border-b border-amber-400/20 mobile-header relative z-10">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Logo */}
@@ -655,7 +655,7 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6 fade-in relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mobile-grid">
           {/* Left Column - Action Cards */}
           <div className="lg:col-span-1 space-y-4">
             {/* My Profile Card */}
@@ -750,7 +750,7 @@ export default function Dashboard() {
                 </p>
                 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                <div className="mobile-grid mb-8">
                   <div className="bg-card/50 rounded-lg p-4 border border-amber-400/10">
                     <div className="text-2xl font-bold text-amber-400 mb-1">{matches.length}</div>
                     <div className="text-muted-foreground text-sm">Active Matches</div>
@@ -871,7 +871,7 @@ export default function Dashboard() {
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="mobile-grid">
                     {matches.slice(0, 4).map((match) => {
                       const matchedProfile = getMatchedProfile(match);
                       
@@ -961,7 +961,7 @@ export default function Dashboard() {
               <p className="text-muted-foreground text-sm mb-4">Profile Photo</p>
               
               {/* Profile Information */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-md mx-auto mb-6">
+              <div className="mobile-grid text-left max-w-md mx-auto mb-6">
                 {profile.age && (
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Calendar className="h-4 w-4 text-amber-400" />

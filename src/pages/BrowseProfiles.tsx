@@ -221,7 +221,7 @@ export default function BrowseProfiles() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mobile-grid">
             {matches.map((match) => {
               // Determine which profile is the matched user (not the current user)
               const matchedProfile = match.user1 === user?.id ? match.user2_profile : match.user1_profile;
@@ -489,7 +489,7 @@ export default function BrowseProfiles() {
               )}
 
               {/* Two Column Layout */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="mobile-grid">
                 {/* My Interests */}
                 <div className="space-y-4">
                   <h3 className="text-xl font-bold text-foreground uppercase tracking-wide">My Interests</h3>
@@ -558,7 +558,7 @@ export default function BrowseProfiles() {
               {/* Additional Details */}
               <div className="space-y-4">
                 <h3 className="text-xl font-bold text-foreground uppercase tracking-wide">Additional Details</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="mobile-grid">
                   {selectedProfile.preferences?.education && (
                     <div className="flex items-center gap-3 p-3 bg-card/50 rounded-lg">
                       <GraduationCap className="h-5 w-5 text-amber-400" />

@@ -17,6 +17,50 @@
   .mobile-table {
     min-width: 600px;
   }
+  
+  .mobile-card {
+    @apply p-4 sm:p-6;
+  }
+  
+  .mobile-text {
+    @apply text-sm sm:text-base;
+  }
+  
+  .mobile-heading {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+  
+  .mobile-spacing {
+    @apply space-y-3 sm:space-y-4 lg:space-y-6;
+  }
+  
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+  }
+  
+  .mobile-flex {
+    @apply flex flex-col sm:flex-row gap-3 sm:gap-4;
+  }
+  
+  .mobile-button {
+    @apply w-full sm:w-auto touch-target;
+  }
+  
+  .mobile-input {
+    @apply w-full text-base touch-target;
+  }
+  
+  .mobile-modal {
+    @apply max-w-[95vw] sm:max-w-md mx-2 sm:mx-auto;
+  }
+  
+  .mobile-header {
+    @apply px-3 sm:px-4 lg:px-6 py-3 sm:py-4;
+  }
+  
+  .mobile-container {
+    @apply container mx-auto px-3 sm:px-4 lg:px-6;
+  }
 }
 
 @layer base {
